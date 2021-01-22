@@ -5,9 +5,7 @@ export const login = (user) => {
   // console.log(user);
 
   return async (dispatch) => {
-    dispatch({
-      type: authConstants.LOGIN_REQUEST,
-    });
+    dispatch({ type: authConstants.LOGIN_REQUEST });
     const res = await axios.post(`/admin/signin`, {
       ...user,
     });
@@ -27,9 +25,7 @@ export const login = (user) => {
       if (res.status === 400) {
         dispatch({
           type: authConstants.LOGIN_FAILURE,
-          payload: {
-            error: res.data.error,
-          },
+          payload: { error: res.data.error },
         });
       }
     }
@@ -40,7 +36,7 @@ export const isUserLoggedIn = () => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
     if (token) {
-      const user = JSON.parse(localStorage.getItem(`user`));
+      const user = JSON.parse(localStorage.getItem("user"));
       dispatch({
         type: authConstants.LOGIN_SUCCESS,
         payload: {
@@ -51,9 +47,7 @@ export const isUserLoggedIn = () => {
     } else {
       dispatch({
         type: authConstants.LOGIN_FAILURE,
-        payload: {
-          error: "Failed to login",
-        },
+        payload: { error: "Failed to login" },
       });
     }
   };
@@ -61,9 +55,7 @@ export const isUserLoggedIn = () => {
 
 export const signout = () => {
   return async (dispatch) => {
-    dispatch({
-      type: authConstants.LOGOUT_REQ,
-    });
+    dispatch({ type: authConstants.LOGOUT_REQ });
     const res = await axios.post(`/admin/signout`);
 
     if (res.status === 200) {
